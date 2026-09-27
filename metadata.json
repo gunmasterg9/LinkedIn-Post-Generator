@@ -1,0 +1,6 @@
+{
+  "name": "EventPulse - AI Event Viralizer",
+  "description": "B2B event marketing & attendee LinkedIn post generator for conferences, summits, and executive gatherings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
