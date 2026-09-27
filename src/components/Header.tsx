@@ -8,6 +8,10 @@ interface HeaderProps {
   attendee: AttendeeProfile;
   onChangeAttendee: (attendee: AttendeeProfile) => void;
   onOpenShareModal: () => void;
+  onOpenQRModal: () => void;
+  onOpenPrivacyModal: () => void;
+  onOpenShortcutsModal: () => void;
+  onOpenAdminModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,6 +21,10 @@ export const Header: React.FC<HeaderProps> = ({
   attendee,
   onChangeAttendee,
   onOpenShareModal,
+  onOpenQRModal,
+  onOpenPrivacyModal,
+  onOpenShortcutsModal,
+  onOpenAdminModal,
 }) => {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
@@ -60,7 +68,6 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onSelectTab('organizer')}
             className="flex items-center gap-2 cursor-pointer group"
           >
-            {/* Real Logo image from prompt */}
             <img
               alt="EventPulse Logo"
               className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
@@ -70,8 +77,8 @@ export const Header: React.FC<HeaderProps> = ({
               EventPulse
             </span>
           </div>
-          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#d5e3fc] text-[#3a485b] font-['DM_Sans'] text-[11px] font-semibold">
-            AI Event Viralizer
+          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#d5e3fc] text-[#003f74] font-['DM_Sans'] text-[11px] font-bold">
+            #0A66C2 Viralizer
           </span>
         </div>
 
@@ -79,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
         <nav className="flex items-center p-1 rounded-full bg-[#eaedff]">
           <button
             onClick={() => onSelectTab('organizer')}
-            className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition-all ${
+            className={`px-3 sm:px-4 py-1.5 rounded-full text-[12px] sm:text-[13px] font-semibold transition-all cursor-pointer ${
               currentTab === 'organizer'
                 ? 'bg-[#ffffff] text-[#003f74] shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
                 : 'text-[#424751] hover:text-[#131b2e]'
@@ -89,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             onClick={() => onSelectTab('attendee')}
-            className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition-all ${
+            className={`px-3 sm:px-4 py-1.5 rounded-full text-[12px] sm:text-[13px] font-semibold transition-all cursor-pointer ${
               currentTab === 'attendee'
                 ? 'bg-[#ffffff] text-[#003f74] shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
                 : 'text-[#424751] hover:text-[#131b2e]'
@@ -99,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             onClick={() => onSelectTab('campaigns')}
-            className={`hidden md:inline-block px-4 py-1.5 rounded-full text-[13px] font-semibold transition-all ${
+            className={`hidden md:inline-block px-3 sm:px-4 py-1.5 rounded-full text-[12px] sm:text-[13px] font-semibold transition-all cursor-pointer ${
               currentTab === 'campaigns'
                 ? 'bg-[#ffffff] text-[#003f74] shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
                 : 'text-[#424751] hover:text-[#131b2e]'
@@ -109,23 +116,42 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </nav>
 
-        {/* Right Action Items */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Live Post Metric Indicator */}
-          <div className="hidden xl:flex items-center gap-2 px-3 py-1 rounded-lg bg-[#f2f3ff] border border-[#c2c6d2]/30">
-            <span className="w-2 h-2 rounded-full bg-[#02569b] animate-pulse"></span>
-            <span className="font-['DM_Sans'] text-[12px] font-medium text-[#424751]">
-              {campaign.postsGenerated.toLocaleString()} Posts Generated
-            </span>
-          </div>
+        {/* Right Utility Actions */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+          {/* Shortcuts Button */}
+          <button
+            onClick={onOpenShortcutsModal}
+            className="p-1.5 rounded-lg text-[#515f74] hover:text-[#003f74] hover:bg-[#f2f3ff] transition-colors cursor-pointer"
+            title="Keyboard shortcuts"
+          >
+            <span className="material-symbols-outlined text-[20px]">keyboard</span>
+          </button>
+
+          {/* Privacy Controls Button */}
+          <button
+            onClick={onOpenPrivacyModal}
+            className="p-1.5 rounded-lg text-[#515f74] hover:text-[#003f74] hover:bg-[#f2f3ff] transition-colors cursor-pointer"
+            title="Privacy & data controls"
+          >
+            <span className="material-symbols-outlined text-[20px]">lock</span>
+          </button>
+
+          {/* Engine Admin Settings */}
+          <button
+            onClick={onOpenAdminModal}
+            className="p-1.5 rounded-lg text-[#515f74] hover:text-[#003f74] hover:bg-[#f2f3ff] transition-colors cursor-pointer"
+            title="Developer engine settings"
+          >
+            <span className="material-symbols-outlined text-[20px]">tune</span>
+          </button>
 
           {/* Share Button */}
           <button
             onClick={onOpenShareModal}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#c2c6d2]/60 bg-[#ffffff] hover:bg-[#f2f3ff] font-['DM_Sans'] text-[13px] font-semibold text-[#131b2e] transition-colors shadow-2xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#c2c6d2]/60 bg-[#ffffff] hover:bg-[#f2f3ff] font-['DM_Sans'] text-[13px] font-semibold text-[#131b2e] transition-colors shadow-2xs cursor-pointer"
             type="button"
           >
-            <span className="material-symbols-outlined text-[18px] text-[#515f74]">
+            <span className="material-symbols-outlined text-[18px] text-[#003f74]">
               ios_share
             </span>
             <span className="hidden sm:inline">Share</span>
@@ -142,12 +168,12 @@ export const Header: React.FC<HeaderProps> = ({
                 className="w-8 h-8 rounded-full object-cover ring-1 ring-[#c2c6d2]/50"
                 src={attendee.avatarUrl}
               />
-              <div className="hidden md:flex flex-col text-left">
+              <div className="hidden lg:flex flex-col text-left">
                 <span className="font-['DM_Sans'] text-[13px] font-semibold text-[#131b2e] leading-tight">
                   {attendee.name}
                 </span>
-                <span className="font-['DM_Sans'] text-[11px] text-[#424751] leading-none">
-                  Event Director
+                <span className="font-['DM_Sans'] text-[10px] text-[#424751] leading-none">
+                  Active Persona
                 </span>
               </div>
               <span className="material-symbols-outlined text-[18px] text-[#515f74]">
@@ -170,7 +196,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onChangeAttendee(p);
                         setProfileDropdownOpen(false);
                       }}
-                      className={`w-full px-3 py-2 flex items-center gap-2.5 text-left hover:bg-[#f2f3ff] transition-colors ${
+                      className={`w-full px-3 py-2 flex items-center gap-2.5 text-left hover:bg-[#f2f3ff] transition-colors cursor-pointer ${
                         p.name === attendee.name ? 'bg-[#eaedff]' : ''
                       }`}
                     >
